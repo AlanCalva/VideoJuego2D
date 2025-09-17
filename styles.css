@@ -1,0 +1,201 @@
+/* ====== Arcade Skin ===================================================== */
+/* Fuente arcade (Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+:root{
+  --bg:#0a0713;           /* fondo profundo púrpura */
+  --bg2:#130b26;
+  --panel:#1a1133;
+  --ink:#e6eaff;          /* texto principal */
+  --muted:#a7b0ff;        /* texto secundario */
+  --accent:#32ffd6;       /* cian neón */
+  --accent2:#ff2bd6;      /* magenta neón */
+  --warn:#ffd166;         /* dorado/advertencia */
+  --grid:#23154a;
+  --line:#2a1e58;
+  --glow:0 0 8px rgba(50,255,214,.65), 0 0 18px rgba(50,255,214,.35);
+  --glow-mag:0 0 8px rgba(255,43,214,.6), 0 0 18px rgba(255,43,214,.35);
+}
+
+body{
+  font-family:'Press Start 2P', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: .5px;
+  background:
+    radial-gradient(1200px 700px at 60% -10%, #2e1b52 0%, #150d2b 50%, #080614 100%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  color:var(--ink);
+  /* Scanlines + sutil flicker */
+  position:relative;
+  overflow-x:hidden;
+}
+body::after{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,.04) 0px,
+      rgba(255,255,255,.04) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  mix-blend-mode:soft-light;
+  pointer-events:none;
+  opacity:.25;
+}
+
+/* Barra superior estilo arcade */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;
+  border-bottom:2px solid var(--line);
+  background:linear-gradient(180deg, rgba(26,17,51,.85) 0%, rgba(13,9,26,.85) 100%);
+  backdrop-filter:blur(6px);
+  box-shadow:0 10px 30px #0008, inset 0 -2px 0 0 #000;
+}
+.topbar h1{
+  margin:0;font-size:18px;color:var(--accent);
+  text-shadow: var(--glow);
+}
+.topbar h2{
+  margin:6px 0 0;font-size:14px;color:var(--ink);
+  text-shadow:0 0 6px rgba(255,255,255,.25);
+}
+.stats{
+  display:flex;gap:18px;align-items:center;
+  color:var(--muted);font-size:12px;
+  text-shadow:0 0 6px rgba(167,176,255,.35);
+}
+
+/* Layout principal */
+main{
+  display:grid;grid-template-columns:1fr 280px;gap:18px;
+  max-width:1200px;margin:18px auto;padding:0 16px
+}
+
+/* Canvas con borde 8-bit y brillo */
+#glcanvas{
+  width:100%;height:600px;display:block;border-radius:12px;
+  background:#05040d;
+  border:4px solid var(--grid);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.6),
+    inset 0 0 0 2px #000,
+    0 0 0 1px #000,
+    0 0 24px rgba(50,255,214,.12);
+  image-rendering:auto;
+}
+#glcanvas:focus{
+  outline:none;
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.65),
+    inset 0 0 0 2px #000,
+    0 0 0 1px #000,
+    0 0 28px rgba(255,43,214,.25),
+    0 0 16px rgba(50,255,214,.25);
+}
+
+/* Panel lateral estilo cartucho */
+.panel{
+  background:
+    linear-gradient(180deg, rgba(42,26,84,.65) 0%, rgba(20,12,41,.85) 100%),
+    radial-gradient(600px 220px at 30% -20%, rgba(255,43,214,.15), transparent 60%);
+  border:2px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 14px 36px #000a, inset 0 0 0 1px #000;
+}
+.panel h2{
+  margin:0 0 10px 0;
+  font-size:14px;color:var(--accent2);
+  text-shadow: var(--glow-mag);
+}
+.panel ul{margin:8px 0 12px 20px;line-height:1.8;font-size:12px;color:var(--ink)}
+.panel li::marker{color:var(--accent2)}
+.hint{opacity:.9;font-size:11px;color:var(--muted)}
+
+/* Botones (si usas botones dentro del panel) */
+.panel .btn, .game-btn, button{
+  font-family:'Press Start 2P', monospace;
+  font-size:11px; letter-spacing:.5px;
+  background:linear-gradient(180deg,#1b0f38 0%, #120a27 100%);
+  color:var(--ink);
+  border:2px solid var(--line);
+  border-radius:10px;
+  padding:10px 12px; cursor:pointer;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    inset 0 0 0 1px #000,
+    0 0 10px rgba(255,43,214,.15);
+  transition: transform .08s ease, box-shadow .2s ease, color .2s ease, border-color .2s ease;
+}
+.panel .btn:hover, .game-btn:hover, button:hover{
+  transform:translateY(-1px);
+  border-color:var(--accent);
+  color:#fff;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.5),
+    inset 0 0 0 1px #000,
+    0 0 14px rgba(50,255,214,.25);
+}
+.panel .btn:active, .game-btn:active, button:active{
+  transform:translateY(0);
+}
+
+/* Footer */
+.footer{
+  max-width:1200px;margin:8px auto 18px;padding:0 16px;
+  opacity:.75;font-size:11px;color:var(--muted);
+  text-align:center;
+}
+
+/* Overlays (mensajes/perdido/ganado) */
+.overlay{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none; opacity:0; transition:opacity .35s ease;
+  font-family:'Press Start 2P', monospace;
+}
+.overlay.show{ opacity:1; pointer-events:auto; }
+.hidden{ display:none; }
+/* Caja de overlay tipo neón */
+.overlay .card{
+  text-align:center; background:rgba(15,10,29,.7);
+  padding:20px 22px; border-radius:12px;
+  border:2px solid var(--line);
+  box-shadow:
+    0 20px 60px #000d,
+    inset 0 0 0 1px #000,
+    0 0 18px rgba(255,43,214,.25),
+    0 0 24px rgba(50,255,214,.2);
+  color:var(--ink); min-width: 260px;
+}
+.overlay .card h3{
+  margin:0 0 10px; font-size:20px; color:var(--accent);
+  text-shadow: var(--glow);
+}
+.overlay .row-btns{ display:flex; gap:10px; justify-content:center; margin-top:10px; }
+.overlay .btn{ padding:10px 12px; }
+.overlay .btn.primary{
+  background:linear-gradient(180deg,#063a32 0%, #092e29 100%);
+  border-color:#0a5; color:#dffff5;
+  box-shadow:0 0 14px rgba(50,255,214,.25), inset 0 0 0 1px #000;
+}
+
+/* “Sacudida” arcade al impacto */
+.shake{ animation:shake .22s linear 1; }
+@keyframes shake{
+  0%{transform:translate(0,0)} 25%{transform:translate(4px,-3px)}
+  50%{transform:translate(-4px,3px)} 75%{transform:translate(3px,-2px)}
+  100%{transform:translate(0,0)}
+}
+
+/* Responsivo */
+@media (max-width: 920px){
+  main{ grid-template-columns:1fr; }
+  #glcanvas{ height:58vw; max-height:62vh; }
+}
+
+/* ======================================================================= */

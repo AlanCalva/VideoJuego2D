@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Breakout WebGL — Alan</title>
+<link rel="stylesheet" href="styles.css">
+  <!-- CSS mínimo para overlays -->
+  
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Breakout WebGL</h1>
+      <h2 id="levelTitle">Nivel 1</h2>
+    </div>
+    <div class="stats">
+      <span id="score">Puntos: 0</span>
+      <span id="levelScore">Puntos Nivel: 0</span>
+      <span id="lives">Vidas: 3</span>
+      <span id="level">Nivel: 1</span>
+    </div>
+  </header>
+
+  <main>
+    <canvas id="glcanvas" width="960" height="540" aria-label="Lienzo WebGL" tabindex="0"></canvas>
+
+    <!-- Overlay: Mensaje corto (nivel completado, etc.) -->
+    <div id="overlayMsg" class="overlay hidden"></div>
+
+    <!-- Overlay: Perdido con acciones -->
+    <div id="overlayLose" class="overlay hidden">
+      <div class="card">
+        <h3 id="loseTitle">¡Perdido!</h3>
+        <div id="loseInfo" style="opacity:.9; margin-bottom:10px;">Nivel 1 — Puntos: 0</div>
+        <div class="row-btns">
+          <button id="btnNext" class="btn primary">➡️ Avanzar de nivel</button>
+          <button id="btnRetry" class="btn">🔄 Reiniciar nivel</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Hecho con WebGL • © <span id="year"></span>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
